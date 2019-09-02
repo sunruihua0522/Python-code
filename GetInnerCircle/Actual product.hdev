@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.1" halcon_version="17.12">
+<procedure name="main">
+<interface/>
+<body>
+<l>*read_image (PicBlockid18773, 'C:/Users/sunru/Documents/WeChat Files/sunrh109989/FileStorage/File/2019-08/190808 五金件检测(1)/190808 五金件检测/1/2.bmp')</l>
+<l>for Index := 6 to 10 by 1</l>
+<l>    read_image(Image,'C:/Users/sunru/Documents/WeChat Files/sunrh109989/FileStorage/File/2019-08/190809/190809/2/'+Index+'.bmp')</l>
+<l>    dev_close_window()</l>
+<l>    dev_open_window_fit_image(Image, 0, 0, -1, -1, WindowHandle)</l>
+<l>    mean_image(Image, ImageMean, 19, 19)</l>
+<c>    </c>
+<c>    *select region</c>
+<l>    dev_set_color('red')</l>
+<l>    threshold (ImageMean, Regions1, 160, 250)</l>
+<l>    fill_up(Regions1, RegionFillUp)</l>
+<l>    connection(RegionFillUp, ConnectedRegions1)</l>
+<l>    select_shape_std(ConnectedRegions1, SelectedRegions, 'max_area', 70)</l>
+<l>    erosion_circle(SelectedRegions, RegionErosion, 400)</l>
+<l>    difference(SelectedRegions, RegionErosion, RegionDifference)</l>
+<c>    </c>
+<c>    </c>
+<l>    reduce_domain(ImageMean, RegionDifference, ImageReduced)</l>
+<c>   </c>
+<c>    </c>
+<c>    </c>
+<l>    threshold (ImageReduced, Regions, 13, 150)</l>
+<l>    connection(Regions, ConnectedRegions)</l>
+<c>  </c>
+<c>    </c>
+<l>    select_shape (ConnectedRegions, SelectedRegions1, ['outer_radius'], 'and', [20.18], [122.94])</l>
+<l>    dilation_circle(SelectedRegions1, RegionDilation, 20)</l>
+<l>    fill_up(RegionDilation, RegionFillUp1)</l>
+<c>    </c>
+<l>    select_shape (RegionFillUp1, SelectedRegions2, ['circularity','area'], 'and', [0.78073,10963.3], [1,31697.3])</l>
+<c>    </c>
+<c>    </c>
+<l>    area_center(SelectedRegions2, Area, Row, Column)</l>
+<l>    dev_set_color('green')</l>
+<l>    disp_cross(WindowHandle, Row, Column, 86, 0)</l>
+<c>    </c>
+<l>    dev_set_color('red')</l>
+<c>    *Find the center of whole region</c>
+<l>    union1(SelectedRegions2, RegionUnion)</l>
+<l>    area_center(RegionUnion, Area1, Row1, Column1)</l>
+<l>    disp_cross(WindowHandle, Row1, Column1, 86, 0)</l>
+<l>    angles:=[]</l>
+<l>    rectangles:=[]</l>
+<l>     dev_set_color('green')</l>
+<l>    for index := 0 to 5 by 1</l>
+<l>        *index:=0</l>
+<l>        offset:=0.7</l>
+<c>        </c>
+<l>        angle_lx(Row[index], Column[index], Row1, Column1, Angle)</l>
+<l>        angles:=[angles,Angle]</l>
+<l>        deltaRow:=Row[index]-Row1</l>
+<l>        deltaColumn:=Column[index]-Column1</l>
+<l>        rectRow:=offset*deltaRow + Row1</l>
+<l>        rectColumn:=offset*deltaColumn + Column1</l>
+<l>        disp_cross(WindowHandle, rectRow, rectColumn, 86, Angle)</l>
+<c>        </c>
+<c>        *gen measure rectangle</c>
+<l>        gen_rectangle2(Rectangle, rectRow, rectColumn, Angle, 60, 150)</l>
+<c>        </c>
+<l>        rectangles:=[rectangles,rectRow, rectColumn, Angle, 60, 150]</l>
+<c>       </c>
+<l>    endfor</l>
+<c>    </c>
+<c>    *sort</c>
+<l>    tuple_sort_index(angles, Indices)</l>
+<l>stop()</l>
+<l>endfor</l>
+<c></c>
+<l>tuple_add(Indices, 1, Sum)</l>
+<c></c>
+<c></c>
+<c></c>
+<c></c>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+</hdevelop>

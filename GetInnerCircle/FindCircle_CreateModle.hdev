@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.1" halcon_version="17.12">
+<procedure name="main">
+<interface/>
+<body>
+<l>read_shape_model('CircleModel', ModelID1)</l>
+<l>for Index := 1 to 10 by 1</l>
+<l>read_image (Image1, 'C:/Users/sunru/Documents/WeChat Files/sunrh109989/FileStorage/File/2019-08/4/4/'+Index+'.bmp')</l>
+<l>dev_close_window()</l>
+<l>dev_open_window_fit_image(Image1, 0, 0, -1, -1, WindowHandle)</l>
+<l>dev_display(Image1)</l>
+<c></c>
+<l>* draw_circle(WindowHandle, Row, Column, Radius)</l>
+<l>* dev_set_draw('margin')</l>
+<l>* gen_circle(Circle, Row, Column, Radius)</l>
+<l>* gen_circle(Circle1, Row, Column, Radius+80)</l>
+<c></c>
+<l>* difference(Circle1, Circle, RegionDifference)</l>
+<l>* reduce_domain(Image1, RegionDifference, ImageReduced)</l>
+<c></c>
+<l>* create_scaled_shape_model(ImageReduced, 'auto', -0.39, 0.79, 'auto', 0.9, 1.1, 'auto', 'auto', 'use_polarity', 'auto', 'auto', ModelID)</l>
+<c></c>
+<l>* write_shape_model(ModelID, 'CircleModel')</l>
+<c></c>
+<c></c>
+<c></c>
+<c></c>
+<c></c>
+<c></c>
+<c></c>
+<l>find_scaled_shape_model(Image1, ModelID1, -0.39, 0.78, 0.9, 1.1, 0.5, 1, 0.3, 'least_squares', 0, 0.9, Row1, Column1, Angle, Scale, Score)</l>
+<l>disp_cross(WindowHandle, Row1, Column1, 86, Angle)</l>
+<l>disp_message(WindowHandle, Score, 'image', Row1, Column1, 'black', 'true')</l>
+<l>stop()</l>
+<l>endfor</l>
+<l>clear_shape_model(ModelID1)</l>
+<c></c>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+</hdevelop>

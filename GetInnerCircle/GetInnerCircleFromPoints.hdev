@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.1" halcon_version="17.12">
+<procedure name="main">
+<interface/>
+<body>
+<l>dev_close_window()</l>
+<l>dev_open_window(0, 0, 512, 512, 'black', WindowHandle)</l>
+<l>gen_region_polygon_filled(Region, 100, 100)</l>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+</hdevelop>

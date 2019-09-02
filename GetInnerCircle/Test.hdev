@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.1" halcon_version="17.12">
+<procedure name="main">
+<interface/>
+<body>
+<l>read_image(Image,'C:/Project/GetInnerCircle/1.png')</l>
+<l>get_image_size(Image, Width, Height)</l>
+<l>gen_image_const(Image4, 'byte', Width, Height)</l>
+<l>dev_close_window()</l>
+<l>dev_open_window_fit_image(Image, 0, 0, -1, -1, WindowHandle)</l>
+<l>decompose3(Image, Image1, Image2, Image3)</l>
+<l>scale_image_range(Image1, ImageScaled, 100, 200)</l>
+<l>threshold (ImageScaled, Regions, 0, 120)</l>
+<l>closing_circle(Regions, RegionClosing, 6)</l>
+<l>connection(RegionClosing, ConnectedRegions)</l>
+<l>select_shape (ConnectedRegions, SelectedRegions, 'width', 'and', 180.28, 263.76)</l>
+<l>dilation_circle(SelectedRegions, RegionDilation, 10)</l>
+<l>skeleton(RegionDilation, Skeleton)</l>
+<l>fill_up(Skeleton, RegionFillUp)</l>
+<l>inner_circle(RegionFillUp, Row, Column, Radius)</l>
+<l>gen_circle(Circle, Row, Column, Radius)</l>
+<l>dev_clear_window()</l>
+<l>dev_display(Image)</l>
+<l>dev_set_draw('margin')</l>
+<l>dev_set_line_width(2)</l>
+<l>dev_display(Circle)</l>
+<c></c>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+</hdevelop>
